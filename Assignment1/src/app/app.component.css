@@ -1,0 +1,184 @@
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Navigation Toolbar */
+.nav-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 16px;
+  border-radius: 4px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Sidenav Container */
+.sidenav-container {
+  flex: 1;
+  margin-top: 64px; /* Height of toolbar */
+}
+
+.sidenav {
+  width: 260px;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}
+
+/* Content Container */
+.content-container {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
+}
+
+/* Navigation list styling */
+.mat-nav-list {
+  padding-top: 0;
+}
+
+.mat-nav-list h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 16px 16px 8px;
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.mat-nav-list a {
+  height: 48px;
+  font-size: 14px;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.mat-nav-list a.active {
+  background-color: rgba(63, 81, 181, 0.1);
+  border-left-color: #3f51b5;
+  color: #3f51b5;
+}
+
+.mat-nav-list a:hover:not(.active) {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Role-specific navigation styling */
+.admin-nav a.active {
+  border-left-color: #3f51b5;
+  color: #3f51b5;
+}
+
+.coach-nav a.active {
+  border-left-color: #ff9800;
+  color: #ff9800;
+}
+
+.student-nav a.active {
+  border-left-color: #4caf50;
+  color: #4caf50;
+}
+
+/* User menu styling */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 8px;
+  height: 48px;
+  border-radius: 24px;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-name {
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .nav-toolbar {
+    padding: 0 8px;
+  }
+  
+  .app-title {
+    font-size: 18px;
+  }
+  
+  .sidenav-container {
+    margin-top: 56px; /* Smaller toolbar on mobile */
+  }
+  
+  .content-container {
+    padding: 16px;
+    min-height: calc(100vh - 56px);
+  }
+  
+  .user-name {
+    display: none;
+  }
+}
+
+/* Animation for sidenav */
+.sidenav {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Role badge styling */
+.role-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+.role-badge.admin {
+  background-color: rgba(63, 81, 181, 0.1);
+  color: #3f51b5;
+}
+
+.role-badge.coach {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.role-badge.student {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}

@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Coach Dashboard</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <h2>Welcome, Coach!</h2>
+        <div class="student-list" role="region" aria-labelledby="student-list">
+            <h3>Assigned Students</h3>
+            <ul>
+                <li *ngFor="let student of assignedStudents">
+                    {{ student.name }} - Progress: {{ student.progress }}%
+                    <button mat-button color="primary">View Details</button>
+                </li>
+            </ul>
+        </div>
+        <div class="feedback-section" role="region" aria-labelledby="feedback-section">
+            <h3>Provide Feedback</h3>
+            <textarea placeholder="Enter feedback here..." aria-label="Feedback text area"></textarea>
+            <button mat-raised-button color="accent">Submit Feedback</button>
+        </div>
+    </mat-card-content>
+</mat-card>

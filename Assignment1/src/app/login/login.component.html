@@ -1,0 +1,25 @@
+<div class="login-header">
+    <h1>Welcome Back!</h1>
+    <p>Please enter your credentials to log in.</p>
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email" required placeholder="Enter your email">
+    <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+      Invalid email format.
+    </mat-error>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password" required placeholder="Enter your password">
+    <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+      Password must be at least 6 characters.
+    </mat-error>
+  </mat-form-field>
+  
+  <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
+  
+  <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="login-button">Login</button>
+</form>

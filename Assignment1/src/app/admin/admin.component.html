@@ -1,0 +1,176 @@
+<div class="admin-dashboard page-transition">
+  <div class="dashboard-header">
+    <h1 class="page-title">Admin Dashboard</h1>
+    <div class="dashboard-actions">
+      <button mat-raised-button color="primary" routerLink="/admin/manage-students">
+        <mat-icon>person_add</mat-icon>
+        Add Student
+      </button>
+      <button mat-raised-button color="accent" routerLink="/admin/manage-coaches">
+        <mat-icon>person_add</mat-icon>
+        Add Coach
+      </button>
+      <button mat-raised-button color="warn" (click)="backupSystem()">
+        <mat-icon>backup</mat-icon>
+        Backup System
+      </button>
+    </div>
+  </div>
+  
+  <div class="stats-overview">
+    <div class="grid-container">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-icon class="dashboard-card-icon">people</mat-icon>
+          <mat-card-title>Total Users</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="stat-value">{{ adminStats.totalUsers }}</div>
+          <div class="stat-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="(adminStats.activeUsers / adminStats.totalUsers) * 100"></div>
+            </div>
+            <div class="progress-label">{{ adminStats.activeUsers }} active ({{ (adminStats.activeUsers / adminStats.totalUsers) * 100 | number:'1.0-0' }}%)</div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" routerLink="/admin/users">View All Users</button>
+        </mat-card-actions>
+      </mat-card>
+      
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-icon class="dashboard-card-icon">school</mat-icon>
+          <mat-card-title>Students</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="stat-value">{{ adminStats.totalStudents }}</div>
+          <div class="stat-trend">
+            <mat-icon class="trend-up">trending_up</mat-icon>
+            <span>5% increase this month</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" routerLink="/admin/manage-students">Manage Students</button>
+        </mat-card-actions>
+      </mat-card>
+      
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-icon class="dashboard-card-icon">sports_cricket</mat-icon>
+          <mat-card-title>Coaches</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="stat-value">{{ adminStats.totalCoaches }}</div>
+          <div class="stat-trend">
+            <mat-icon class="trend-stable">trending_flat</mat-icon>
+            <span>Stable this month</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" routerLink="/admin/manage-coaches">Manage Coaches</button>
+        </mat-card-actions>
+      </mat-card>
+      
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-icon class="dashboard-card-icon">pending_actions</mat-icon>
+          <mat-card-title>Pending Approvals</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="stat-value">{{ adminStats.pendingApprovals }}</div>
+          <div class="stat-alert" *ngIf="adminStats.pendingApprovals > 0">
+            <mat-icon class="alert-icon">priority_high</mat-icon>
+            <span>Requires attention</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" routerLink="/admin/approvals">Review Approvals</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  
+  <div class="dashboard-content">
+    <div class="content-row">
+      <mat-card class="recent-activity-card">
+        <mat-card-header>
+          <mat-card-title>Recent Activity</mat-card-title>
+          <span class="spacer"></span>
+          <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #activityMenu="matMenu">
+            <button mat-menu-item (click)="refreshActivities()">
+              <mat-icon>refresh</mat-icon>
+              <span>Refresh</span>
+            </button>
+            <button mat-menu-item routerLink="/admin/activity-log">
+              <mat-icon>history</mat-icon>
+              <span>View All Activity</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let activity of recentActivities">
+              <div class="activity-icon">
+                <mat-icon>notifications</mat-icon>
+              </div>
+              <div class="activity-details">
+                <p class="activity-text">{{ activity.action }}</p>
+                <p class="activity-time">{{ activity.timestamp | date:'medium' }}</p>
+              </div>
+            </div>
+            <div class="no-activity" *ngIf="recentActivities.length === 0">
+              <mat-icon>notifications_off</mat-icon>
+              <p>No recent activity</p>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="primary" routerLink="/admin/activity-log">View All Activity</button>
+        </mat-card-actions>
+      </mat-card>
+      
+      <mat-card class="system-status-card">
+        <mat-card-header>
+          <mat-card-title>System Status</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="status-item">
+            <div class="status-label">Database Connection</div>
+            <div class="status-value">
+              <mat-icon class="status-icon-success">check_circle</mat-icon>
+              <span>Connected</span>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Last Backup</div>
+            <div class="status-value">
+              <mat-icon class="status-icon-success">backup</mat-icon>
+              <span>{{ adminStats.lastBackup | date }}</span>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">System Version</div>
+            <div class="status-value">
+              <mat-icon class="status-icon-info">info</mat-icon>
+              <span>v1.2.0</span>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Storage Usage</div>
+            <div class="status-value">
+              <mat-icon class="status-icon-warning">storage</mat-icon>
+              <span>75% (15GB/20GB)</span>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="primary" routerLink="/admin/system">System Settings</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

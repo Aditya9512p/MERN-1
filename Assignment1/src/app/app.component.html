@@ -1,0 +1,156 @@
+<div class="app-container">
+  <mat-toolbar color="primary" class="nav-toolbar">
+    <button mat-icon-button *ngIf="isAuthenticated" (click)="sidenav.toggle()" aria-label="Toggle navigation menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    
+    <img src="assets/images/logo.png" alt="Academy Logo" class="logo" />
+    <span class="app-title">Elite Cricket Academy</span>
+    
+    <span class="spacer"></span>
+    
+    <!-- Public navigation -->
+    <ng-container *ngIf="!isAuthenticated">
+      <button mat-button routerLink="/home">
+        <mat-icon>home</mat-icon>
+        <span class="nav-label">Home</span>
+      </button>
+      <button mat-button routerLink="/about">
+        <mat-icon>info</mat-icon>
+        <span class="nav-label">About</span>
+      </button>
+      <button mat-button routerLink="/contact">
+        <mat-icon>contact_support</mat-icon>
+        <span class="nav-label">Contact</span>
+      </button>
+      <button mat-raised-button color="accent" routerLink="/login">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+    </ng-container>
+    
+    <!-- Authenticated user options -->
+    <ng-container *ngIf="isAuthenticated">
+      <button mat-button routerLink="/home">
+        <mat-icon>home</mat-icon>
+        <span class="nav-label">Home</span>
+      </button>
+      
+      <div class="user-menu-trigger" [matMenuTriggerFor]="userMenu">
+        <img *ngIf="isAdmin" src="assets/images/admin-avatar.png" alt="User Avatar" class="user-avatar">
+        <img *ngIf="isCoach" src="assets/images/coach-avatar.png" alt="User Avatar" class="user-avatar">
+        <img *ngIf="isStudent" src="assets/images/student-avatar.png" alt="User Avatar" class="user-avatar">
+        <span class="user-name">
+          {{ authService.getCurrentUser()?.username }}
+          <span *ngIf="isAdmin" class="role-badge admin">Admin</span>
+          <span *ngIf="isCoach" class="role-badge coach">Coach</span>
+          <span *ngIf="isStudent" class="role-badge student">Student</span>
+        </span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+      
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false" *ngIf="isAuthenticated">
+      <mat-nav-list>
+        <!-- Admin Navigation -->
+        <ng-container *ngIf="isAdmin" class="admin-nav">
+          <h3 matSubheader>Admin Dashboard</h3>
+          <a mat-list-item routerLink="/admin" routerLinkActive="active">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </a>
+          <a mat-list-item routerLink="/admin/manage-students" routerLinkActive="active">
+            <mat-icon matListItemIcon>school</mat-icon>
+            <span>Manage Students</span>
+          </a>
+          <a mat-list-item routerLink="/admin/manage-coaches" routerLinkActive="active">
+            <mat-icon matListItemIcon>sports_cricket</mat-icon>
+            <span>Manage Coaches</span>
+          </a>
+          <a mat-list-item routerLink="/admin/reports" routerLinkActive="active">
+            <mat-icon matListItemIcon>assessment</mat-icon>
+            <span>Reports</span>
+          </a>
+          <a mat-list-item routerLink="/admin/settings" routerLinkActive="active">
+            <mat-icon matListItemIcon>settings</mat-icon>
+            <span>System Settings</span>
+          </a>
+        </ng-container>
+        
+        <!-- Coach Navigation -->
+        <ng-container *ngIf="isCoach" class="coach-nav">
+          <h3 matSubheader>Coach Dashboard</h3>
+          <a mat-list-item routerLink="/coach" routerLinkActive="active">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </a>
+          <a mat-list-item routerLink="/coach/students" routerLinkActive="active">
+            <mat-icon matListItemIcon>people</mat-icon>
+            <span>My Students</span>
+          </a>
+          <a mat-list-item routerLink="/coach/schedule" routerLinkActive="active">
+            <mat-icon matListItemIcon>calendar_today</mat-icon>
+            <span>Schedule</span>
+          </a>
+          <a mat-list-item routerLink="/coach/feedback" routerLinkActive="active">
+            <mat-icon matListItemIcon>feedback</mat-icon>
+            <span>Provide Feedback</span>
+          </a>
+          <a mat-list-item routerLink="/coach/training" routerLinkActive="active">
+            <mat-icon matListItemIcon>fitness_center</mat-icon>
+            <span>Training Plans</span>
+          </a>
+        </ng-container>
+        
+        <!-- Student Navigation -->
+        <ng-container *ngIf="isStudent" class="student-nav">
+          <h3 matSubheader>Student Dashboard</h3>
+          <a mat-list-item routerLink="/student" routerLinkActive="active">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </a>
+          <a mat-list-item routerLink="/student/courses" routerLinkActive="active">
+            <mat-icon matListItemIcon>book</mat-icon>
+            <span>My Courses</span>
+          </a>
+          <a mat-list-item routerLink="/student/assignments" routerLinkActive="active">
+            <mat-icon matListItemIcon>assignment</mat-icon>
+            <span>Assignments</span>
+          </a>
+          <a mat-list-item routerLink="/student/progress" routerLinkActive="active">
+            <mat-icon matListItemIcon>trending_up</mat-icon>
+            <span>My Progress</span>
+          </a>
+          <a mat-list-item routerLink="/student/schedule" routerLinkActive="active">
+            <mat-icon matListItemIcon>event</mat-icon>
+            <span>My Schedule</span>
+          </a>
+        </ng-container>
+      </mat-nav-list>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+      <div class="content-container page-transition">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

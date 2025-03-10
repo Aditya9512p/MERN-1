@@ -1,0 +1,150 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/theming';
+@include mat-core();
+
+// Define a custom theme
+$primary-palette: mat-palette($mat-indigo, 700);
+$accent-palette: mat-palette($mat-amber, 500);
+$warn-palette: mat-palette($mat-red, 500);
+
+$theme: mat-light-theme($primary-palette, $accent-palette, $warn-palette);
+
+@include angular-material-theme($theme);
+
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #f5f5f5;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+// Enhanced container styles
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+// Card enhancements
+.mat-card {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  transition: box-shadow 0.3s ease-in-out;
+  
+  &:hover {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  }
+}
+
+.mat-card-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.mat-card-subtitle {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+// Utility classes
+.spacer {
+  flex: 1 1 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+// Snackbar styles
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+}
+
+.warning-snackbar {
+  background: #ff9800;
+  color: white;
+}
+
+.info-snackbar {
+  background: #2196f3;
+  color: white;
+}
+
+// Dashboard card styles
+.dashboard-card {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  
+  .mat-card-header {
+    padding-bottom: 10px;
+  }
+  
+  .mat-card-content {
+    flex-grow: 1;
+  }
+  
+  .dashboard-card-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: #3f51b5;
+  }
+}
+
+// Role-specific color accents
+.admin-accent {
+  color: #3f51b5;
+}
+
+.coach-accent {
+  color: #ff9800;
+}
+
+.student-accent {
+  color: #4caf50;
+}
+
+// Responsive grid
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+// Animation for page transitions
+.page-transition {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} 

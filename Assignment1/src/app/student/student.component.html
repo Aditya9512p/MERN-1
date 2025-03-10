@@ -1,0 +1,26 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Student Dashboard</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <h2>Welcome, Student!</h2>
+        <div class="student-info" role="region" aria-labelledby="student-profile">
+            <h3>Your Profile</h3>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <button mat-raised-button color="primary">Edit Profile</button>
+        </div>
+        <div class="enrolled-courses" role="region" aria-labelledby="enrolled-courses">
+            <h3>Enrolled Courses</h3>
+            <ul>
+                <li *ngFor="let course of student.courses">{{ course.name }} - Progress: {{ course.progress }}%</li>
+            </ul>
+        </div>
+        <div class="assignments" role="region" aria-labelledby="assignments">
+            <h3>Assignments</h3>
+            <ul>
+                <li *ngFor="let assignment of student.assignments">{{ assignment.title }} - Due: {{ assignment.dueDate }}</li>
+            </ul>
+        </div>
+    </mat-card-content>
+</mat-card>
